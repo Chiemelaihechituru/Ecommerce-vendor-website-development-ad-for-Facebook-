@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>E-commerce Website Request Form</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background: #f8f5f0;
+      min-height: 100vh;
+      padding: 30px 15px;
+      color: #202124;
+    }
+
+    .form-container {
+      max-width: 640px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    .form-header {
+      background: linear-gradient(135deg, #F59E0B, #D97706);
+      color: white;
+      padding: 32px 28px 28px;
+    }
+
+    .form-header h1 {
+      font-size: 28px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .form-header p {
+      opacity: 0.95;
+      font-size: 15px;
+    }
+
+    form {
+      padding: 28px;
+    }
+
+    .field {
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: #202124;
+    }
+
+    .required::after {
+      content: " *";
+      color: #d93025;
+    }
+
+    .example {
+      font-size: 13px;
+      color: #5f6368;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #dadce0;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: #fff;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #F59E0B;
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.25);
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .radio-group,
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .radio-option,
+    .checkbox-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #F59E0B;
+      cursor: pointer;
+    }
+
+    .file-upload {
+      border: 2px dashed #dadce0;
+      border-radius: 8px;
+      padding: 24px;
+      text-align: center;
+      background: #fdf8f0;
+      transition: border-color 0.2s;
+    }
+
+    .file-upload:hover {
+      border-color: #F59E0B;
+    }
+
+    .file-upload input[type="file"] {
+      display: none;
+    }
+
+    .file-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #F59E0B;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .file-label:hover {
+      background: #D97706;
+    }
+
+    .file-name {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #5f6368;
+    }
+
+    .submit-area {
+      margin-top: 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    button[type="submit"] {
+      background: #F59E0B;
+      color: white;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button[type="submit"]:hover {
+      background: #D97706;
+    }
+
+    button[type="submit"]:disabled {
+      background: #9aa0a6;
+      cursor: not-allowed;
+    }
+
+    .clear-btn {
+      background: transparent;
+      border: none;
+      color: #D97706;
+      font-size: 15px;
+      cursor: pointer;
+      padding: 8px 12px;
+    }
+
+    .clear-btn:hover {
+      text-decoration: underline;
+    }
+
+    .note {
+      font-size: 12px;
+      color: #5f6368;
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .message {
+      display: none;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 15px;
+    }
+
+    .message.success {
+      background: #e6f4ea;
+      color: #137333;
+      border: 1px solid #ceead6;
+    }
+
+    .message.error {
+      background: #fce8e6;
+      color: #c5221f;
+      border: 1px solid #f5c2c0;
+    }
+
+    @media (max-width: 480px) {
+      .form-header h1 {
+        font-size: 24px;
+      }
+      form {
+        padding: 20px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <div class="form-header">
+      <h1>E-commerce Website Request Form</h1>
+      <p>Tell us about your business and website needs.</p>
+    </div>
+
+    <form id="requestForm" 
+          action="https://formsubmit.co/cazmirtech@gmail.com" 
+          method="POST" 
+          enctype="multipart/form-data">
+
+      <input type="hidden" name="_subject" value="New E-commerce Website Request">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+
+      <div id="formMessage" class="message"></div>
+
+      <!-- Email -->
+      <div class="field">
+        <label class="required">Email</label>
+        <input type="email" name="email" required placeholder="your.email@example.com">
+      </div>
+
+      <!-- Business Name -->
+      <div class="field">
+        <label class="required">Business Name</label>
+        <span class="example">Example: Jenna Fashion Hub</span>
+        <input type="text" name="business_name" required placeholder="Your answer">
+      </div>
+
+      <!-- WhatsApp Number -->
+      <div class="field">
+        <label class="required">WhatsApp Number</label>
+        <span class="example">Example: 0801 234 5678</span>
+        <input type="tel" name="whatsapp" required placeholder="Your answer">
+      </div>
+
+      <!-- Business Description -->
+      <div class="field">
+        <label class="required">Briefly describe your business</label>
+        <span class="example">Example: We sell fabrics, shoes and handbags both wholesale and retail.</span>
+        <textarea name="business_description" required placeholder="Your answer"></textarea>
+      </div>
+
+      <!-- Do you have a logo? -->
+      <div class="field">
+        <label class="required">Do you already have a logo?</label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="has_logo" value="Yes" required>
+            Yes
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="has_logo" value="No">
+            No
+          </label>
+        </div>
+      </div>
+
+      <!-- Logo Upload -->
+      <div class="field">
+        <label>Logo (If available)</label>
+        <div class="file-upload">
+          <label class="file-label" for="logo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            Add file
+          </label>
+          <input type="file" id="logo" name="logo" accept="image/*">
+          <div class="file-name" id="fileName">No file chosen (Max 10 MB • Images only)</div>
+        </div>
+      </div>
+
+      <!-- Plan -->
+      <div class="field">
+        <label class="required">Which plan are you interested in?</label>
+        <select name="plan" required>
+          <option value="" disabled selected>Choose</option>
+          <option value="Starter plan (₦50,000)">Starter plan (₦50,000)</option>
+          <option value="Premium plan (₦200,000)">Premium plan (₦200,000)</option>
+        </select>
+      </div>
+
+      <!-- Anything else -->
+      <div class="field">
+        <label>Is there anything else you'd like us to know? (Optional)</label>
+        <textarea name="additional_info" placeholder="Your answer"></textarea>
+      </div>
+
+      <!-- How did you hear about us -->
+      <div class="field">
+        <label class="required">How did you hear about us?</label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="referral_source" value="Facebook" required>
+            Facebook
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="referral_source" value="Instagram">
+            Instagram
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="referral_source" value="WhatsApp">
+            WhatsApp
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="referral_source" value="Google">
+            Google
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="referral_source" value="Friend/Referral">
+            Friend/Referral
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="referral_source" value="Other">
+            Other:
+            <input type="text" name="referral_other" placeholder="Please specify" 
+                   style="margin-left:8px; width:auto; padding:6px 10px; display:none;" 
+                   id="otherInput">
+          </label>
+        </div>
+      </div>
+
+      <div class="submit-area">
+        <button type="submit" id="submitBtn">Submit</button>
+        <button type="button" class="clear-btn" onclick="clearForm()">Clear form</button>
+      </div>
+
+      <p class="note">
+        Never submit passwords through this form.<br>
+        Your information will be sent securely to cazmirtech@gmail.com
+      </p>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('logo').addEventListener('change', function(e) {
+      const fileName = e.target.files[0] ? e.target.files[0].name : 'No file chosen (Max 10 MB • Images only)';
+      document.getElementById('fileName').textContent = fileName;
+    });
+
+    document.querySelectorAll('input[name="referral_source"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const otherInput = document.getElementById('otherInput');
+        if (this.value === 'Other') {
+          otherInput.style.display = 'inline-block';
+          otherInput.required = true;
+        } else {
+          otherInput.style.display = 'none';
+          otherInput.required = false;
+          otherInput.value = '';
+        }
+      });
+    });
+
+    function clearForm() {
+      document.getElementById('requestForm').reset();
+      document.getElementById('fileName').textContent = 'No file chosen (Max 10 MB • Images only)';
+      document.getElementById('otherInput').style.display = 'none';
+      document.getElementById('formMessage').style.display = 'none';
+    }
+
+    document.getElementById('requestForm').addEventListener('submit', function() {
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+    });
+  </script>
+</body>
+</html>
