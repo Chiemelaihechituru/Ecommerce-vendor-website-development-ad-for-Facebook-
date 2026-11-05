@@ -254,13 +254,15 @@
     </div>
 
     <form id="requestForm" 
-          action="https://formsubmit.co/cazmirtech@gmail.com" 
+          action="https://api.web3forms.com/submit" 
           method="POST" 
           enctype="multipart/form-data">
 
-      <input type="hidden" name="_subject" value="New E-commerce Website Request">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_captcha" value="false">
+      <!-- Web3Forms configuration -->
+      <input type="hidden" name="access_key" value="48f7971b-1bd6-414f-a5b0-8393237a259f">
+      <input type="hidden" name="subject" value="New E-commerce Website Request">
+      <input type="hidden" name="from_name" value="E-commerce Request Form">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
 
       <div id="formMessage" class="message"></div>
 
@@ -412,10 +414,41 @@
       document.getElementById('formMessage').style.display = 'none';
     }
 
-    document.getElementById('requestForm').addEventListener('submit', function() {
-      const btn = document.getElementById('submitBtn');
+    const formEl = document.getElementById('requestForm');
+    const msgEl = document.getElementById('formMessage');
+    const btn = document.getElementById('submitBtn');
+
+    function showMessage(type, text) {
+      msgEl.className = 'message ' + type;
+      msgEl.style.display = 'block';
+      msgEl.textContent = text;
+      msgEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    formEl.addEventListener('submit', async function(e) {
+      e.preventDefault();
       btn.disabled = true;
       btn.textContent = 'Sending...';
+
+      try {
+        const res = await fetch(formEl.action, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new FormData(formEl)
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.success) throw new Error(data.message || 'Something went wrong.');
+
+        formEl.reset();
+        document.getElementById('fileName').textContent = 'No file chosen (Max 10 MB • Images only)';
+        document.getElementById('otherInput').style.display = 'none';
+        showMessage('success', 'Thank you! Your request has been submitted.');
+      } catch (err) {
+        showMessage('error', (err.message || 'Submission failed.') + ' Please try again.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Submit';
+      }
     });
   </script>
 </body>
