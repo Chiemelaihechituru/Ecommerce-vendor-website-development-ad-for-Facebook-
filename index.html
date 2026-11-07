@@ -253,10 +253,7 @@
       <p>Tell us about your business and website needs.</p>
     </div>
 
-    <form id="requestForm" 
-          action="https://api.web3forms.com/submit" 
-          method="POST" 
-          enctype="multipart/form-data">
+    <form id="requestForm" action="https://api.web3forms.com/submit" method="POST">
 
       <!-- Web3Forms configuration -->
       <input type="hidden" name="access_key" value="48f7971b-1bd6-414f-a5b0-8393237a259f">
@@ -296,6 +293,7 @@
       <!-- Do you have a logo? -->
       <div class="field">
         <label class="required">Do you already have a logo?</label>
+        <span class="example">No worries if you don't have one yet. It's completely fine, and we can help you with that.</span>
         <div class="radio-group">
           <label class="radio-option">
             <input type="radio" name="has_logo" value="Yes" required>
@@ -305,23 +303,6 @@
             <input type="radio" name="has_logo" value="No">
             No
           </label>
-        </div>
-      </div>
-
-      <!-- Logo Upload -->
-      <div class="field">
-        <label>Logo (If available)</label>
-        <div class="file-upload">
-          <label class="file-label" for="logo">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="17 8 12 3 7 8"/>
-              <line x1="12" y1="3" x2="12" y2="15"/>
-            </svg>
-            Add file
-          </label>
-          <input type="file" id="logo" name="logo" accept="image/*">
-          <div class="file-name" id="fileName">No file chosen (Max 10 MB • Images only)</div>
         </div>
       </div>
 
@@ -388,11 +369,6 @@
   </div>
 
   <script>
-    document.getElementById('logo').addEventListener('change', function(e) {
-      const fileName = e.target.files[0] ? e.target.files[0].name : 'No file chosen (Max 10 MB • Images only)';
-      document.getElementById('fileName').textContent = fileName;
-    });
-
     document.querySelectorAll('input[name="referral_source"]').forEach(radio => {
       radio.addEventListener('change', function() {
         const otherInput = document.getElementById('otherInput');
@@ -409,7 +385,6 @@
 
     function clearForm() {
       document.getElementById('requestForm').reset();
-      document.getElementById('fileName').textContent = 'No file chosen (Max 10 MB • Images only)';
       document.getElementById('otherInput').style.display = 'none';
       document.getElementById('formMessage').style.display = 'none';
     }
@@ -440,7 +415,6 @@
         if (!res.ok || !data.success) throw new Error(data.message || 'Something went wrong.');
 
         formEl.reset();
-        document.getElementById('fileName').textContent = 'No file chosen (Max 10 MB • Images only)';
         document.getElementById('otherInput').style.display = 'none';
         showMessage('success', 'Thank you! Your request has been submitted.');
       } catch (err) {
